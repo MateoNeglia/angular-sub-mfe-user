@@ -1,8 +1,14 @@
-import { NgModule } from '@angular/core';
+import { Injector, NgModule, OnInit } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { createCustomElement } from '@angular/elements';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { MatSliderModule } from '@angular/material/slider';
+import { Component } from '@angular/core';
+import { MatTableModule } from '@angular/material/table'
+
+
 
 @NgModule({
   declarations: [
@@ -10,9 +16,21 @@ import { AppComponent } from './app.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatSliderModule,
+    MatTableModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [],  
+  bootstrap: []
 })
-export class AppModule { }
+
+export class AppModule {
+  constructor(private injector: Injector) {}
+
+  ngDoBootstrap() {
+    const custom = createCustomElement(AppComponent, {injector: this.injector});
+    customElements.define('angular-sub-mfe-user', custom);
+  }
+  
+  
+ }
